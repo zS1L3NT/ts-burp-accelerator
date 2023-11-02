@@ -4,8 +4,8 @@
 	"author": "zS1L3NT <zechariahtan144@gmail.com> (https://www.zectan.com)",
 	"license": "GPL-3.0",
 	"scripts": {
-		"start": "bun src/app.ts",
-		"build": "tsc src/app.ts",
+		"start": "bun src/base.ts",
+		"build": "tsc src/base.ts",
 		"lint": "tsc --noEmit && eslint src --fix && prettier src --write && rm tsconfig.tsbuildinfo"
 	},
 	"devDependencies": {
