@@ -30,7 +30,9 @@ const iter = async (usnm: string, pswd: string) => {
 
 for (const P of PASSWORDS) {
 	if (await iter("carlos", P)) {
-		console.log(P)
+		console.log("PASSWORD SUCCESS:", P)
 		break
+	} else {
+		console.log("PASSWORD FAILURE:", P)
 	}
 }

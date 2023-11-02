@@ -58,7 +58,7 @@ const iter = async (mfa1: number, mfa2: number) => {
 		console.log("MFA SUCCESS:", r3.cookies())
 		return true
 	} else {
-		console.log("MFA FAILED: ", mfa1)
+		console.log("MFA FAILURE:", mfa1)
 	}
 
 	const r4 = await sess.req`
@@ -79,7 +79,7 @@ const iter = async (mfa1: number, mfa2: number) => {
 		console.log("MFA SUCCESS:", r4.cookies())
 		return true
 	} else {
-		console.log("MFA FAILED: ", mfa2)
+		console.log("MFA FAILURE:", mfa2)
 	}
 
 	return false
