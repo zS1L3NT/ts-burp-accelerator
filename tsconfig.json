@@ -3,16 +3,15 @@
 		/** Transpiler */
 		"target": "esnext",
 		"lib": ["esnext"], // "dom", "dom.iterable", "esnext"
-		"module": "esnext", // commonjs
-		"moduleResolution": "bundler",
+		"module": "commonjs", // esnext
+		"moduleResolution": "node",
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
 
 		/** Project */
 		"rootDir": "src",
 		"outDir": "dist",
-		"types": ["bun-types"],
-		// "typeRoots": ["./node_modules/@types", "./src/@types"],
+		"typeRoots": ["./node_modules/@types", "./src/@types"],
 
 		/** Type Checking */
 		"strict": true,
@@ -38,5 +37,5 @@
 		// "isolatedModules": true,
 		// "incremental": true
 	},
-	"include": ["src"],
+	"include": ["src"]
 }
