@@ -1,3 +1,8 @@
+/**
+ * PortSwigger Lab: Infinite money logic flaw
+ * https://portswigger.net/web-security/logic-flaws/examples/lab-logic-flaws-infinite-money
+ */
+
 import { Sess } from "../base"
 
 const LABID = "0ae200b304f1263c80b09ef900210079"
