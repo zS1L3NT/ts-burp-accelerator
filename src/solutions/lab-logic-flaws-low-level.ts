@@ -9,7 +9,7 @@ const LABID = "0ab00021049c901a81e98080008c00b1"
 
 const iter = async () => {
 	return await Sess.req`
-		POST https://${LABID}.web-security-academy.net/cart HTTP/2
+		POST /cart HTTP/2
 		Host: ${LABID}.web-security-academy.net
 		Cookie: session=xHPm1tBrXrqV8OowM4QgvD0AIg9qIIPP
 		Content-Length: 37

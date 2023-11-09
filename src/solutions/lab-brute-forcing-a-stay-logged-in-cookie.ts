@@ -11,7 +11,7 @@ const LABID = "0a5400c704a953308d07580b0085005b"
 
 const iter = async (usnm: string, pswd: string) => {
 	const r1 = await Sess.req`
-		GET https://${LABID}.web-security-academy.net/my-account?id=${usnm} HTTP/1.1
+		GET /my-account?id=${usnm} HTTP/1.1
 		Sec-GPC: 1
 		Sec-Fetch-Site: same-origin
 		Sec-Fetch-Mode: navigate

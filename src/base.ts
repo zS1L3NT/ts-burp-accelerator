@@ -221,7 +221,7 @@ export class Sess {
 			.split("\n")
 		if (!lines.length) throw new Error("Empty request string!")
 
-		const [method, url] = lines.shift()!.trim().split(" ")
+		const [method, path] = lines.shift()!.trim().split(" ")
 
 		let i = 0
 		const headers = {} as Record<string, string>
@@ -246,8 +246,15 @@ export class Sess {
 			.map(l => l.trim())
 			.join("\n")
 			.trim()
+		
+		let url: URL
+		try {
+			url = new URL(path ?? "")
+		} catch {
+			url = new URL(`https://${headers.Host || headers.host}${path}`)
+		}
 
-		const req = await fetch(url!, {
+		const req = await fetch(url, {
 			method,
 			headers,
 			body: method!.toLowerCase() === "get" ? undefined : body,

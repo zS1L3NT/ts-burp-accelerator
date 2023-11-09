@@ -9,7 +9,7 @@ const LABID = "0adc0027034255f682b4160b000b002c"
 
 const iter = async (usnm: string, pswd: string) => {
 	const r2 = await Sess.req`
-		POST https://${LABID}.web-security-academy.net/my-account/change-password HTTP/2
+		POST /my-account/change-password HTTP/2
 		Host: ${LABID}.web-security-academy.net
 		Cookie: session=xuDNp22rar8mSp5SDL2QjvHDkQwaaZmN; session=cyiCBiX6qb7hHlfSqUk5EmVQmx4VmVU0
 		Content-Length: 78
